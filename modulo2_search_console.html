@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>KeywordLab Pro – Modulo 2: Search Console</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <title>KeywordLab Pro – Search Console</title>
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <style>
     :root{
       --bg:#080f1e;--panel:#0d1526;--panel2:#111e33;
@@ -14,66 +14,69 @@
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:Inter,Segoe UI,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px}
-    .layout{display:grid;grid-template-columns:280px 1fr;gap:20px;max-width:1300px;margin:0 auto}
-    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:20px}
-    .card-sm{padding:14px 16px}
-    .logo{font-size:18px;font-weight:800;margin-bottom:20px}.logo span{color:var(--accent)}
-    .section-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:20px;max-width:1300px;margin:0 auto}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+    .logo{font-size:17px;font-weight:800;margin-bottom:18px}.logo span{color:var(--accent)}
+    .section-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;margin-top:14px}
     .page-title{font-size:22px;font-weight:700;margin-bottom:4px}
-    .page-sub{color:var(--muted);font-size:14px;margin-bottom:20px}
+    .page-sub{color:var(--muted);font-size:14px;margin-bottom:18px}
     input,select{background:#080f1e;color:var(--text);border:1px solid rgba(148,163,184,.2);
-      border-radius:10px;padding:10px 13px;font-size:13px;outline:none;width:100%;transition:.15s}
+      border-radius:10px;padding:10px 12px;font-size:13px;outline:none;width:100%;transition:.15s}
     input:focus,select:focus{border-color:var(--accent)}
-    .btn{padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:.15s}
+    .btn{padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:.15s}
     .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{filter:brightness(1.1)}
     .btn-ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
     .btn-ghost:hover{border-color:var(--accent)}
     .btn-sm{padding:7px 12px;font-size:12px}
     .btn-green{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.2)}
     .btn-green:hover{background:rgba(34,197,94,.25)}
-    .gap{display:flex;flex-direction:column;gap:10px}
-    .row{display:flex;gap:10px;align-items:center}
-    .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
+    .btn-full{width:100%;margin-top:8px}
+    .gap{display:flex;flex-direction:column;gap:8px}
+    .badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700}
     .easy{background:rgba(34,197,94,.15);color:#86efac}
     .medium{background:rgba(245,158,11,.15);color:#fde68a}
     .hard{background:rgba(239,68,68,.15);color:#fca5a5}
-    .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-    .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+    .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
     .stat-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:4px}
-    .stat-val{font-size:24px;font-weight:800}
+    .stat-val{font-size:22px;font-weight:800}
     .stat-sub{font-size:11px;color:var(--muted);margin-top:3px}
-    .table-wrap{overflow:auto;border-radius:12px;border:1px solid var(--border);margin-top:12px}
-    table{width:100%;border-collapse:collapse;background:#080f1e;min-width:700px}
+    .table-wrap{overflow:auto;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#080f1e;min-width:680px}
     th,td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;text-align:left}
     th{background:#0a1220;color:#94a3b8;font-weight:600;position:sticky;top:0;z-index:1}
     tr:last-child td{border-bottom:none}
     tr:hover td{background:rgba(59,130,246,.04)}
     .cell-kw{font-weight:600}
-    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);
+    .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);
       border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
     @keyframes spin{to{transform:rotate(360deg)}}
     .loading-bar{width:100%;height:3px;background:var(--panel2);border-radius:2px;overflow:hidden;margin:10px 0}
     .loading-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));animation:load 1.8s ease-in-out infinite}
     @keyframes load{0%{width:0%;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0%;margin-left:100%}}
-    .empty{text-align:center;padding:36px 20px;color:var(--muted);font-size:13px}
-    .prop-item{padding:10px 12px;background:var(--panel2);border:1px solid var(--border);
-      border-radius:10px;cursor:pointer;font-size:13px;transition:.15s}
+    .empty{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px}
+    .prop-item{padding:9px 12px;background:var(--panel2);border:1px solid var(--border);
+      border-radius:9px;cursor:pointer;font-size:12px;transition:.15s;margin-bottom:6px}
     .prop-item:hover{border-color:var(--accent);color:var(--text)}
     .prop-item.selected{border-color:var(--accent);background:rgba(59,130,246,.08);color:var(--text)}
-    .tag-kw{background:rgba(56,189,248,.12);color:#7dd3fc}
-    .tag-page{background:rgba(139,92,246,.12);color:#c4b5fd}
-    .oauth-bar{display:flex;align-items:center;gap:10px;padding:12px 14px;
-      background:var(--panel2);border-radius:12px;margin-bottom:16px;border:1px solid var(--border)}
-    .avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;border:2px solid var(--accent2)}
-    .connected{color:#86efac;font-size:12px;font-weight:600}
+    .user-bar{display:flex;align-items:center;gap:10px;padding:10px 12px;
+      background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);
+      border-radius:10px;margin-bottom:14px}
+    .avatar{width:28px;height:28px;border-radius:50%;object-fit:cover}
+    .user-name{font-size:13px;font-weight:700}
+    .user-mail{font-size:11px;color:var(--muted)}
+    .status-dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);flex-shrink:0}
+    .debug{margin-top:8px;padding:8px 10px;background:#050c1a;border:1px solid #1a2d4a;
+      border-radius:8px;font-size:11px;color:#64748b;line-height:1.8;display:none}
     .toast{position:fixed;bottom:20px;right:20px;background:#1e3a5f;border:1px solid #3b82f6;
       color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;z-index:9999;opacity:0;transition:.3s}
     .toast.show{opacity:1}
-    .tab-bar{display:flex;gap:4px;background:var(--panel2);border-radius:10px;padding:4px;margin-bottom:16px;width:fit-content}
+    .tab-bar{display:flex;gap:4px;background:var(--panel2);border-radius:10px;padding:4px;margin-bottom:14px;width:fit-content}
     .tab{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted)}
     .tab.active{background:var(--panel);color:var(--text)}
     .tab-content{display:none}.tab-content.active{display:block}
-    @media(max-width:900px){.layout{grid-template-columns:1fr}}
+    .opp-row{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--panel2);
+      border-radius:10px;border:1px solid var(--border);margin-bottom:8px}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
@@ -81,482 +84,408 @@
 
   <!-- SIDEBAR -->
   <div>
-    <div class="card" style="margin-bottom:14px">
+    <div class="card" style="margin-bottom:12px">
       <div class="logo">Keyword<span>Lab</span> Pro</div>
 
-      <!-- OAUTH STATUS -->
-      <div class="oauth-bar" id="oauthBar">
-        <img class="avatar" id="sideAvatar" src="" style="display:none"/>
-        <div style="flex:1">
-          <div class="connected" id="sideStatus">⚠ Non connesso</div>
-          <div style="font-size:11px;color:var(--muted)" id="sideMail"></div>
+      <!-- USER BAR auto-popolato -->
+      <div class="user-bar" id="userBar" style="display:none">
+        <div class="status-dot"></div>
+        <img class="avatar" id="userAvatar" src="" alt=""/>
+        <div>
+          <div class="user-name" id="userName"></div>
+          <div class="user-mail" id="userMail"></div>
         </div>
-        <button class="btn btn-sm btn-ghost" id="loginSideBtn">Connetti</button>
+        <button class="btn btn-sm btn-ghost" style="margin-left:auto" id="logoutBtn">Esci</button>
       </div>
 
-      <div class="section-title">Client ID OAuth</div>
-      <div class="gap" style="margin-bottom:14px">
-        <input id="clientIdInput" placeholder="xxx.apps.googleusercontent.com"/>
-        <button class="btn btn-primary btn-sm" id="initBtn">Inizializza</button>
-      </div>
-
-      <div class="section-title">Proprietà Search Console</div>
-      <div id="propList"><div class="empty" style="padding:16px">Connettiti per vedere le proprietà.</div></div>
-
-      <div style="margin-top:14px">
-        <button class="btn btn-green btn-sm" style="width:100%" id="loadPropsBtn" disabled>
-          🔄 Carica proprietà
+      <!-- LOGIN BUTTON (visibile solo se non loggato) -->
+      <div id="loginArea">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Accedi per caricare le proprietà Search Console.</div>
+        <button class="btn btn-primary btn-full" id="loginBtn">
+          <svg style="width:16px;height:16px;vertical-align:middle;margin-right:6px" viewBox="0 0 24 24">
+            <path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+            <path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Accedi con Google
         </button>
       </div>
+
+      <div class="section-title" style="margin-top:16px">Proprietà Search Console</div>
+      <div id="propList"><div class="empty" style="padding:12px;font-size:12px">Accedi per vedere le proprietà.</div></div>
+      <button class="btn btn-green btn-full btn-sm" id="reloadPropsBtn" style="margin-top:8px;display:none">🔄 Ricarica proprietà</button>
+
+      <!-- DEBUG -->
+      <div class="debug" id="debugBox"><strong style="color:#e2e8f0">Debug:</strong><div id="debugLog"></div></div>
     </div>
 
-    <div class="card card-sm">
-      <div class="section-title">Filtri import</div>
-      <div class="gap">
-        <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Data inizio</div>
-          <input type="date" id="startDate"/>
-        </div>
-        <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Data fine</div>
-          <input type="date" id="endDate"/>
-        </div>
-        <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Device</div>
-          <select id="deviceFilter">
-            <option value="">Tutti</option>
-            <option value="MOBILE">Mobile</option>
-            <option value="DESKTOP">Desktop</option>
-            <option value="TABLET">Tablet</option>
-          </select>
-        </div>
-        <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Min click</div>
-          <select id="minClicks">
-            <option value="0">Tutti</option>
-            <option value="1">Almeno 1</option>
-            <option value="5">Almeno 5</option>
-            <option value="10">Almeno 10</option>
-          </select>
-        </div>
-        <div>
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Righe</div>
-          <select id="rowCount">
-            <option value="100">100</option>
-            <option value="250">250</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" id="importBtn" disabled>⬇ Importa dati GSC</button>
-        <button class="btn btn-ghost btn-sm" id="exportCsvBtn" disabled>⬇ Esporta CSV</button>
+    <div class="card gap">
+      <div class="section-title" style="margin-top:0">Filtri import</div>
+      <div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Data inizio</div>
+        <input type="date" id="startDate"/>
       </div>
+      <div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Data fine</div>
+        <input type="date" id="endDate"/>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Device</div>
+        <select id="deviceFilter">
+          <option value="">Tutti</option>
+          <option value="MOBILE">Mobile</option>
+          <option value="DESKTOP">Desktop</option>
+          <option value="TABLET">Tablet</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Min. click</div>
+        <select id="minClicks">
+          <option value="0">Tutti</option>
+          <option value="1">Almeno 1</option>
+          <option value="5">Almeno 5</option>
+          <option value="10">Almeno 10</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Righe</div>
+        <select id="rowCount">
+          <option value="100">100</option>
+          <option value="250">250</option>
+          <option value="500">500</option>
+          <option value="1000">1000</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-full" id="importBtn" disabled>⬇ Importa dati GSC</button>
+      <button class="btn btn-ghost btn-sm btn-full" id="exportCsvBtn" disabled>⬇ Esporta CSV</button>
     </div>
   </div>
 
   <!-- MAIN -->
   <div>
-    <div class="page-title">Search Console Import</div>
-    <div class="page-sub">Dati reali di query, page, click, impressioni, CTR e posizione dal tuo sito.</div>
+    <div class="page-title">Search Console</div>
+    <div class="page-sub">Query, pagine, click, impressioni, CTR e posizione in tempo reale.</div>
 
-    <!-- STATISTICHE -->
     <div class="g4">
-      <div class="card card-sm">
-        <div class="stat-lbl">Query totali</div>
-        <div class="stat-val" id="statQueries">0</div>
-      </div>
-      <div class="card card-sm">
-        <div class="stat-lbl">Click totali</div>
-        <div class="stat-val" id="statClicks">0</div>
-      </div>
-      <div class="card card-sm">
-        <div class="stat-lbl">Impressioni</div>
-        <div class="stat-val" id="statImpr">0</div>
-      </div>
-      <div class="card card-sm">
-        <div class="stat-lbl">Posizione media</div>
-        <div class="stat-val" id="statPos">–</div>
-      </div>
+      <div class="card"><div class="stat-lbl">Query</div><div class="stat-val" id="statQ">0</div></div>
+      <div class="card"><div class="stat-lbl">Click</div><div class="stat-val" id="statC">0</div></div>
+      <div class="card"><div class="stat-lbl">Impressioni</div><div class="stat-val" id="statI">0</div></div>
+      <div class="card"><div class="stat-lbl">Posiz. media</div><div class="stat-val" id="statP">–</div></div>
     </div>
 
-    <!-- LOADING -->
-    <div id="loadingArea" style="display:none">
-      <div style="font-size:13px;color:var(--muted);margin-bottom:4px"><span class="spinner"></span>Import in corso da Search Console…</div>
+    <div id="loadingArea" style="display:none;margin-bottom:12px">
+      <div style="font-size:12px;color:var(--muted)"><span class="spinner"></span>Import in corso…</div>
       <div class="loading-bar"><div class="loading-fill"></div></div>
     </div>
 
-    <!-- TABS -->
     <div class="tab-bar">
       <div class="tab active" data-tab="queries">Query</div>
       <div class="tab" data-tab="pages">Pagine</div>
-      <div class="tab" data-tab="opportunities">Opportunità</div>
+      <div class="tab" data-tab="opps">Opportunità</div>
     </div>
 
-    <!-- TAB: QUERY -->
     <div class="tab-content active" id="tab-queries">
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-        <input id="searchFilter" placeholder="Cerca query…" style="max-width:280px"/>
-        <select id="posFilter" style="max-width:180px">
+        <input id="searchFilter" placeholder="Cerca query…" style="max-width:260px"/>
+        <select id="posFilter" style="max-width:170px">
           <option value="">Tutte le posizioni</option>
           <option value="top3">Top 3</option>
           <option value="top10">Top 10</option>
-          <option value="11-20">Posizione 11-20</option>
-          <option value="21+">Posizione 21+</option>
+          <option value="11-20">Pos. 11-20</option>
+          <option value="21+">Pos. 21+</option>
         </select>
       </div>
       <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Query</th>
-              <th>Click</th>
-              <th>Impressioni</th>
-              <th>CTR</th>
-              <th>Posizione</th>
-              <th>Stato</th>
-            </tr>
-          </thead>
-          <tbody id="queryTable">
-            <tr><td colspan="6"><div class="empty">Connettiti e importa i dati per visualizzare le query.</div></td></tr>
-          </tbody>
+        <table><thead><tr>
+          <th>Query</th><th>Click</th><th>Impressioni</th><th>CTR</th><th>Posizione</th><th>Stato</th>
+        </tr></thead>
+        <tbody id="queryTable"><tr><td colspan="6"><div class="empty">Nessun dato ancora.</div></td></tr></tbody>
         </table>
       </div>
     </div>
 
-    <!-- TAB: PAGINE -->
     <div class="tab-content" id="tab-pages">
       <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Pagina</th>
-              <th>Click</th>
-              <th>Impressioni</th>
-              <th>CTR</th>
-              <th>Posizione media</th>
-            </tr>
-          </thead>
-          <tbody id="pageTable">
-            <tr><td colspan="5"><div class="empty">Nessun dato ancora.</div></td></tr>
-          </tbody>
+        <table><thead><tr>
+          <th>Pagina</th><th>Click</th><th>Impressioni</th><th>CTR</th><th>Posizione</th>
+        </tr></thead>
+        <tbody id="pageTable"><tr><td colspan="5"><div class="empty">Nessun dato.</div></td></tr></tbody>
         </table>
       </div>
     </div>
 
-    <!-- TAB: OPPORTUNITÀ -->
-    <div class="tab-content" id="tab-opportunities">
-      <div id="oppList"><div class="empty">Le opportunità appariranno dopo l'import dei dati.</div></div>
+    <div class="tab-content" id="tab-opps">
+      <div id="oppList"><div class="empty">Le opportunità appariranno dopo l'import.</div></div>
     </div>
-
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── UTILS ── */
-function toast(msg,ms=3000){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),ms);
-}
-function escH(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
-function fmt(n){ return n>=1000?(n/1000).toFixed(1)+'k':n; }
+/* ─── UTILS ─── */
+const $ = id => document.getElementById(id);
+function toast(m,ms=3200){const e=$('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),ms);}
+function escH(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function fmt(n){return n>=1000?(n/1000).toFixed(1)+'k':String(n);}
+function dbg(m){const b=$('debugBox'),l=$('debugLog');b.style.display='block';l.innerHTML+='<div>'+m+'</div>';}
 
-/* ── DATES ── */
-const today = new Date();
-const d30 = new Date(today); d30.setDate(d30.getDate()-90);
-document.getElementById('startDate').value = d30.toISOString().slice(0,10);
-document.getElementById('endDate').value = today.toISOString().slice(0,10);
+/* ─── DATE DEFAULTS ─── */
+const today=new Date(),d90=new Date(today);
+d90.setDate(d90.getDate()-90);
+$('startDate').value=d90.toISOString().slice(0,10);
+$('endDate').value=today.toISOString().slice(0,10);
 
-/* ── STATE ── */
-let accessToken = null;
-let selectedProp = null;
-let allQueryData = [];
-let allPageData = [];
+/* ─── STATE ─── */
+let accessToken=null, tokenClient=null;
+let allQ=[], allP=[];
 
-/* ── OAUTH ── */
-let tokenClient = null;
-const savedClientId = localStorage.getItem('kwlab_client_id');
-if(savedClientId) document.getElementById('clientIdInput').value = savedClientId;
+/* ─── AUTO-INIT: legge clientId da localStorage ─── */
+window.addEventListener('load', ()=>{
+  const clientId = localStorage.getItem('kwlab_client_id');
+  const profile  = localStorage.getItem('kwlab_profile');
 
-const savedProfile = localStorage.getItem('kwlab_profile');
-if(savedProfile){
-  try{
-    const p = JSON.parse(savedProfile);
-    document.getElementById('sideStatus').textContent = '✅ Connesso';
-    document.getElementById('sideMail').textContent = p.email||'';
-    if(p.picture){ const av=document.getElementById('sideAvatar'); av.src=p.picture; av.style.display='block'; }
-    document.getElementById('loginSideBtn').textContent = 'Riconnetti';
-  }catch(e){}
-}
+  dbg('ClientId in storage: '+(clientId?clientId.slice(0,18)+'…':'NESSUNO'));
+  dbg('Profile in storage: '+(profile?'SI':'NO'));
 
-document.getElementById('initBtn').addEventListener('click', ()=>{
-  const cid = document.getElementById('clientIdInput').value.trim();
-  if(!cid){ toast('⚠ Inserisci il Client ID'); return; }
-  localStorage.setItem('kwlab_client_id', cid);
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: cid,
-    scope: 'openid email profile https://www.googleapis.com/auth/webmasters.readonly',
-    callback: handleToken,
-  });
-  document.getElementById('loginSideBtn').disabled = false;
-  toast('✅ OAuth pronto — premi Connetti');
-});
-
-document.getElementById('loginSideBtn').addEventListener('click', ()=>{
-  if(!tokenClient){
-    const cid = document.getElementById('clientIdInput').value.trim();
-    if(!cid){ toast('⚠ Prima inizializza OAuth'); return; }
-    tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: cid,
-      scope: 'openid email profile https://www.googleapis.com/auth/webmasters.readonly',
-      callback: handleToken,
-    });
+  if(!clientId){
+    dbg('⚠ Nessun ClientId — mostra pulsante login manuale');
+    return;
   }
-  tokenClient.requestAccessToken();
+
+  // Inizializza tokenClient in background
+  try{
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'openid email profile https://www.googleapis.com/auth/webmasters.readonly',
+      callback: onToken,
+    });
+    dbg('✅ tokenClient pronto');
+  }catch(e){ dbg('⚠ GSI non ancora pronto, ritento tra 1s…'); setTimeout(()=>initTokenClient(clientId),1000); return; }
+
+  // Se c'è profilo salvato mostralo e carica subito le proprietà
+  if(profile){
+    try{
+      const p=JSON.parse(profile);
+      showUser(p);
+      dbg('✅ Profilo ripristinato da cache — richiedo token silenzioso…');
+      tokenClient.requestAccessToken({prompt:''});
+    }catch(e){ dbg('⚠ Errore parse profilo: '+e.message); }
+  }
 });
 
-async function handleToken(resp){
-  if(resp.error){ toast('❌ '+resp.error); return; }
-  accessToken = resp.access_token;
+function initTokenClient(clientId){
   try{
-    const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+accessToken}});
-    const p = await r.json();
-    localStorage.setItem('kwlab_profile', JSON.stringify(p));
-    document.getElementById('sideStatus').textContent = '✅ Connesso';
-    document.getElementById('sideMail').textContent = p.email||'';
-    if(p.picture){ const av=document.getElementById('sideAvatar'); av.src=p.picture; av.style.display='block'; }
-    document.getElementById('loginSideBtn').textContent = 'Riconnetti';
-    document.getElementById('loadPropsBtn').disabled = false;
-    toast('✅ Connesso come '+p.name);
-  }catch(e){ toast('⚠ Errore profilo'); }
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'openid email profile https://www.googleapis.com/auth/webmasters.readonly',
+      callback: onToken,
+    });
+    dbg('✅ tokenClient pronto (retry)');
+    const profile = localStorage.getItem('kwlab_profile');
+    if(profile){ try{ showUser(JSON.parse(profile)); tokenClient.requestAccessToken({prompt:''}); }catch(e){} }
+  }catch(e){ dbg('❌ GSI init fallito: '+e.message); }
 }
 
-/* ── LOAD PROPERTIES ── */
-document.getElementById('loadPropsBtn').addEventListener('click', loadProperties);
+/* ─── LOGIN BUTTON ─── */
+$('loginBtn').addEventListener('click', ()=>{
+  if(!tokenClient){
+    const cid=localStorage.getItem('kwlab_client_id');
+    if(!cid){ toast('⚠ Torna al Modulo 1 e fai prima il login'); return; }
+    initTokenClient(cid);
+    setTimeout(()=>tokenClient&&tokenClient.requestAccessToken(),800);
+  } else {
+    tokenClient.requestAccessToken();
+  }
+});
+
+/* ─── TOKEN CALLBACK ─── */
+async function onToken(resp){
+  if(resp.error){
+    dbg('❌ Token error: '+resp.error);
+    if(resp.error!=='access_denied') toast('⚠ Login necessario — premi "Accedi con Google"');
+    return;
+  }
+  accessToken=resp.access_token;
+  dbg('✅ Token ricevuto: '+accessToken.slice(0,16)+'…');
+
+  try{
+    const r=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+accessToken}});
+    const p=await r.json();
+    localStorage.setItem('kwlab_profile',JSON.stringify(p));
+    showUser(p);
+    dbg('✅ Profilo: '+p.email);
+    await loadProperties();
+  }catch(e){ dbg('⚠ Errore profilo: '+e.message); await loadProperties(); }
+}
+
+/* ─── SHOW USER ─── */
+function showUser(p){
+  $('userBar').style.display='flex';
+  $('loginArea').style.display='none';
+  $('userAvatar').src=p.picture||'';
+  $('userName').textContent=p.name||'';
+  $('userMail').textContent=p.email||'';
+  $('reloadPropsBtn').style.display='block';
+}
+
+/* ─── LOGOUT ─── */
+$('logoutBtn').addEventListener('click',()=>{
+  accessToken=null;
+  localStorage.removeItem('kwlab_profile');
+  $('userBar').style.display='none';
+  $('loginArea').style.display='block';
+  $('reloadPropsBtn').style.display='none';
+  $('propList').innerHTML='<div class="empty" style="font-size:12px;padding:12px">Accedi per vedere le proprietà.</div>';
+  toast('👋 Disconnesso');
+});
+
+/* ─── CARICA PROPRIETÀ ─── */
+$('reloadPropsBtn').addEventListener('click', loadProperties);
 
 async function loadProperties(){
-  if(!accessToken){ toast('⚠ Prima connettiti'); return; }
-  document.getElementById('propList').innerHTML = '<div class="empty"><span class="spinner"></span> Carico…</div>';
+  if(!accessToken){ dbg('⚠ Token mancante per loadProperties'); return; }
+  $('propList').innerHTML='<div class="empty" style="font-size:12px;padding:12px"><span class="spinner"></span> Carico…</div>';
+  dbg('→ Chiamata API sites…');
   try{
-    const r = await fetch('https://www.googleapis.com/webmasters/v3/sites',{
-      headers:{Authorization:'Bearer '+accessToken}
-    });
-    const data = await r.json();
-    const sites = data.siteEntry || [];
-    if(!sites.length){
-      document.getElementById('propList').innerHTML = '<div class="empty">Nessuna proprietà trovata in Search Console.</div>';
-      return;
-    }
-    document.getElementById('propList').innerHTML = sites.map(s => `
-      <div class="prop-item" data-url="${escH(s.siteUrl)}" onclick="selectProp('${escH(s.siteUrl)}')">
-        ${escH(s.siteUrl.replace('sc-domain:',''))}
-      </div>
-    `).join('');
+    const r=await fetch('https://www.googleapis.com/webmasters/v3/sites',{headers:{Authorization:'Bearer '+accessToken}});
+    dbg('Status: '+r.status);
+    const data=await r.json();
+    if(data.error){ dbg('❌ API error: '+data.error.message); $('propList').innerHTML='<div class="empty" style="color:#fca5a5;font-size:12px">'+escH(data.error.message)+'</div>'; return; }
+    const sites=data.siteEntry||[];
+    dbg('Proprietà: '+sites.length);
+    if(!sites.length){ $('propList').innerHTML='<div class="empty" style="font-size:12px">Nessuna proprietà trovata.</div>'; return; }
+    $('propList').innerHTML=sites.map(s=>`<div class="prop-item" data-url="${escH(s.siteUrl)}">${escH(s.siteUrl.replace('sc-domain:',''))}</div>`).join('');
+    document.querySelectorAll('.prop-item').forEach(el=>el.addEventListener('click',()=>selectProp(el.dataset.url)));
     toast('✅ '+sites.length+' proprietà caricate');
-  }catch(e){
-    document.getElementById('propList').innerHTML = '<div class="empty" style="color:#fca5a5">Errore caricamento proprietà.</div>';
-    toast('❌ Errore: '+e.message);
-  }
+  }catch(e){ dbg('❌ Exception: '+e.message); }
 }
 
+/* ─── SELEZIONA PROPRIETÀ ─── */
 function selectProp(url){
-  selectedProp = url;
-  document.querySelectorAll('.prop-item').forEach(el => el.classList.toggle('selected', el.dataset.url===url));
-  document.getElementById('importBtn').disabled = false;
-  toast('✅ Proprietà selezionata: '+url);
+  document.querySelectorAll('.prop-item').forEach(e=>e.classList.toggle('selected',e.dataset.url===url));
+  localStorage.setItem('kwlab_prop',url);
+  $('importBtn').disabled=false;
+  toast('✅ '+url.replace('sc-domain:',''));
+  dbg('Proprietà selezionata: '+url);
 }
 
-/* ── IMPORT GSC ── */
-document.getElementById('importBtn').addEventListener('click', importGSC);
+// Ripristina ultima proprietà selezionata
+const savedProp=localStorage.getItem('kwlab_prop');
+
+/* ─── IMPORT ─── */
+$('importBtn').addEventListener('click', importGSC);
 
 async function importGSC(){
-  if(!accessToken||!selectedProp){ toast('⚠ Connettiti e seleziona una proprietà'); return; }
-  const startDate = document.getElementById('startDate').value;
-  const endDate = document.getElementById('endDate').value;
-  const device = document.getElementById('deviceFilter').value;
-  const rowCount = parseInt(document.getElementById('rowCount').value);
-  const minClicks = parseInt(document.getElementById('minClicks').value);
-
-  document.getElementById('loadingArea').style.display = 'block';
-  document.getElementById('importBtn').disabled = true;
-
+  const prop=localStorage.getItem('kwlab_prop');
+  if(!accessToken||!prop){ toast('⚠ Connettiti e seleziona una proprietà'); return; }
+  const start=$('startDate').value, end=$('endDate').value;
+  const device=$('deviceFilter').value, rows=parseInt($('rowCount').value);
+  const minC=parseInt($('minClicks').value);
+  $('loadingArea').style.display='block';
+  $('importBtn').disabled=true;
+  dbg('Import: '+prop+' '+start+' → '+end);
   try{
-    // QUERY DIMENSION
-    const bodyQ = {
-      startDate, endDate,
-      dimensions: ['query'],
-      rowLimit: rowCount,
-      ...(device && {dimensionFilterGroups:[{filters:[{dimension:'device',operator:'equals',expression:device}]}]})
-    };
-    const rQ = await fetch(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(selectedProp)}/searchAnalytics/query`,{
-      method:'POST',
-      headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
-      body: JSON.stringify(bodyQ)
-    });
-    const dQ = await rQ.json();
-
-    // PAGE DIMENSION
-    const bodyP = { startDate, endDate, dimensions:['page'], rowLimit: rowCount };
-    const rP = await fetch(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(selectedProp)}/searchAnalytics/query`,{
-      method:'POST',
-      headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
-      body: JSON.stringify(bodyP)
-    });
-    const dP = await rP.json();
-
-    allQueryData = (dQ.rows||[]).filter(r => r.clicks >= minClicks);
-    allPageData = (dP.rows||[]);
-
-    document.getElementById('loadingArea').style.display = 'none';
-    document.getElementById('importBtn').disabled = false;
-    document.getElementById('exportCsvBtn').disabled = false;
-
-    renderStats();
-    renderQueryTable();
-    renderPageTable();
-    renderOpportunities();
-    toast('✅ Import completato: '+allQueryData.length+' query, '+allPageData.length+' pagine');
-
+    const dimFilter=device?{dimensionFilterGroups:[{filters:[{dimension:'device',operator:'equals',expression:device}]}]}:{};
+    const [rQ,rP]=await Promise.all([
+      fetch(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,{
+        method:'POST',headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+        body:JSON.stringify({startDate:start,endDate:end,dimensions:['query'],rowLimit:rows,...dimFilter})
+      }),
+      fetch(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(prop)}/searchAnalytics/query`,{
+        method:'POST',headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+        body:JSON.stringify({startDate:start,endDate:end,dimensions:['page'],rowLimit:rows})
+      })
+    ]);
+    const [dQ,dP]=await Promise.all([rQ.json(),rP.json()]);
+    dbg('Query rows: '+(dQ.rows||[]).length+' — Page rows: '+(dP.rows||[]).length);
+    allQ=(dQ.rows||[]).filter(r=>r.clicks>=minC);
+    allP=dP.rows||[];
+    $('loadingArea').style.display='none';
+    $('importBtn').disabled=false;
+    $('exportCsvBtn').disabled=false;
+    renderStats();renderQ();renderP();renderOpps();
+    toast('✅ '+allQ.length+' query, '+allP.length+' pagine');
   }catch(e){
-    document.getElementById('loadingArea').style.display = 'none';
-    document.getElementById('importBtn').disabled = false;
-    toast('❌ Errore import: '+e.message);
+    $('loadingArea').style.display='none';
+    $('importBtn').disabled=false;
+    dbg('❌ '+e.message);toast('❌ '+e.message);
   }
 }
 
-/* ── STATS ── */
+/* ─── RENDER ─── */
 function renderStats(){
-  const totalClicks = allQueryData.reduce((s,r)=>s+r.clicks,0);
-  const totalImpr = allQueryData.reduce((s,r)=>s+r.impressions,0);
-  const avgPos = allQueryData.length ? (allQueryData.reduce((s,r)=>s+r.position,0)/allQueryData.length).toFixed(1) : '–';
-  document.getElementById('statQueries').textContent = allQueryData.length;
-  document.getElementById('statClicks').textContent = fmt(totalClicks);
-  document.getElementById('statImpr').textContent = fmt(totalImpr);
-  document.getElementById('statPos').textContent = avgPos;
+  const tc=allQ.reduce((s,r)=>s+r.clicks,0);
+  const ti=allQ.reduce((s,r)=>s+r.impressions,0);
+  const ap=allQ.length?(allQ.reduce((s,r)=>s+r.position,0)/allQ.length).toFixed(1):'–';
+  $('statQ').textContent=allQ.length;$('statC').textContent=fmt(tc);$('statI').textContent=fmt(ti);$('statP').textContent=ap;
 }
-
-/* ── QUERY TABLE ── */
-function posClass(p){ return p<=3?'easy':p<=10?'medium':'hard'; }
-
-function renderQueryTable(filter='',posF=''){
-  let rows = allQueryData;
-  if(filter) rows = rows.filter(r=>r.keys[0].toLowerCase().includes(filter.toLowerCase()));
-  if(posF==='top3') rows = rows.filter(r=>r.position<=3);
-  else if(posF==='top10') rows = rows.filter(r=>r.position<=10);
-  else if(posF==='11-20') rows = rows.filter(r=>r.position>10&&r.position<=20);
-  else if(posF==='21+') rows = rows.filter(r=>r.position>20);
-
-  if(!rows.length){ document.getElementById('queryTable').innerHTML = '<tr><td colspan="6"><div class="empty">Nessuna query trovata.</div></td></tr>'; return; }
-  document.getElementById('queryTable').innerHTML = rows.slice(0,500).map(r => {
-    const q = r.keys[0];
-    const ctr = (r.ctr*100).toFixed(1)+'%';
-    const pos = r.position.toFixed(1);
-    return `<tr>
-      <td class="cell-kw">${escH(q)}</td>
-      <td>${r.clicks}</td>
-      <td>${fmt(r.impressions)}</td>
-      <td>${ctr}</td>
-      <td><span class="badge ${posClass(r.position)}">${pos}</span></td>
-      <td>${r.position<=3?'🏆 Top 3':r.position<=10?'✅ Prima pag.':r.position<=20?'⚠ Pag. 2':'📉 Bassa'}</td>
-    </tr>`;
+function pc(p){return p<=3?'easy':p<=10?'medium':'hard';}
+function renderQ(f='',pf=''){
+  let r=allQ;
+  if(f)r=r.filter(x=>x.keys[0].toLowerCase().includes(f.toLowerCase()));
+  if(pf==='top3')r=r.filter(x=>x.position<=3);
+  else if(pf==='top10')r=r.filter(x=>x.position<=10);
+  else if(pf==='11-20')r=r.filter(x=>x.position>10&&x.position<=20);
+  else if(pf==='21+')r=r.filter(x=>x.position>20);
+  if(!r.length){$('queryTable').innerHTML='<tr><td colspan="6"><div class="empty">Nessuna query.</div></td></tr>';return;}
+  $('queryTable').innerHTML=r.slice(0,500).map(x=>`<tr>
+    <td class="cell-kw">${escH(x.keys[0])}</td>
+    <td>${x.clicks}</td><td>${fmt(x.impressions)}</td>
+    <td>${(x.ctr*100).toFixed(1)}%</td>
+    <td><span class="badge ${pc(x.position)}">${x.position.toFixed(1)}</span></td>
+    <td>${x.position<=3?'🏆 Top 3':x.position<=10?'✅ Pag. 1':x.position<=20?'⚠ Pag. 2':'📉 Bassa'}</td>
+  </tr>`).join('');
+}
+function renderP(){
+  if(!allP.length){$('pageTable').innerHTML='<tr><td colspan="5"><div class="empty">Nessuna pagina.</div></td></tr>';return;}
+  $('pageTable').innerHTML=allP.slice(0,200).map(x=>{
+    const short=x.keys[0].replace(/https?:\/\/[^/]+/,'').slice(0,55)||'/';
+    return`<tr><td class="cell-kw" title="${escH(x.keys[0])}">${escH(short)}</td>
+      <td>${x.clicks}</td><td>${fmt(x.impressions)}</td>
+      <td>${(x.ctr*100).toFixed(1)}%</td>
+      <td><span class="badge ${pc(x.position)}">${x.position.toFixed(1)}</span></td></tr>`;
   }).join('');
 }
-
-/* ── PAGE TABLE ── */
-function renderPageTable(){
-  if(!allPageData.length){ document.getElementById('pageTable').innerHTML = '<tr><td colspan="5"><div class="empty">Nessuna pagina disponibile.</div></td></tr>'; return; }
-  document.getElementById('pageTable').innerHTML = allPageData.slice(0,200).map(r => {
-    const url = r.keys[0];
-    const short = url.replace(/https?:\/\/[^/]+/,'').slice(0,60)||'/';
-    return `<tr>
-      <td class="cell-kw" title="${escH(url)}">${escH(short)}</td>
-      <td>${r.clicks}</td>
-      <td>${fmt(r.impressions)}</td>
-      <td>${(r.ctr*100).toFixed(1)}%</td>
-      <td><span class="badge ${posClass(r.position)}">${r.position.toFixed(1)}</span></td>
-    </tr>`;
-  }).join('');
+function renderOpps(){
+  const lh=allQ.filter(r=>r.position>3&&r.position<=15&&r.impressions>50).sort((a,b)=>b.impressions-a.impressions).slice(0,8);
+  const lc=allQ.filter(r=>r.impressions>100&&r.ctr<0.02).sort((a,b)=>b.impressions-a.impressions).slice(0,6);
+  const nt=allQ.filter(r=>r.position>10&&r.position<=20).sort((a,b)=>b.clicks-a.clicks).slice(0,6);
+  const block=(title,rows,extra)=>`<div style="margin-bottom:18px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px">${title}</div>
+    ${rows.length?rows.map(r=>`<div class="opp-row">
+      <div style="flex:1;font-size:13px;font-weight:600">${escH(r.keys[0])}</div>
+      <span class="badge ${pc(r.position)}">pos. ${r.position.toFixed(1)}</span>
+      ${extra(r)}
+    </div>`).join(''):'<div class="empty" style="padding:12px">Nessuna.</div>'}
+  </div>`;
+  $('oppList').innerHTML=
+    block('🍋 Quick Win — pos. 4-15 con alte impressioni',lh,r=>`<span style="font-size:12px;color:var(--muted)">${fmt(r.impressions)} impr.</span>`)+
+    block('📉 Alto volume, basso CTR',lc,r=>`<span class="badge hard">CTR ${(r.ctr*100).toFixed(1)}%</span><span style="font-size:12px;color:var(--muted)">${fmt(r.impressions)} impr.</span>`)+
+    block('🚀 Vicino alla prima pagina (11-20)',nt,r=>`<span style="font-size:12px;color:var(--muted)">${r.clicks} click</span>`);
 }
 
-/* ── OPPORTUNITÀ ── */
-function renderOpportunities(){
-  const rows = allQueryData;
-  if(!rows.length){ document.getElementById('oppList').innerHTML = '<div class="empty">Nessun dato.</div>'; return; }
+/* ─── FILTRI ─── */
+$('searchFilter').addEventListener('input',e=>renderQ(e.target.value,$('posFilter').value));
+$('posFilter').addEventListener('change',e=>renderQ($('searchFilter').value,e.target.value));
 
-  const lowHanging = rows.filter(r=>r.position>3&&r.position<=15&&r.impressions>50).sort((a,b)=>b.impressions-a.impressions).slice(0,8);
-  const highImprLowCtr = rows.filter(r=>r.impressions>100&&r.ctr<0.02).sort((a,b)=>b.impressions-a.impressions).slice(0,6);
-  const nearTop = rows.filter(r=>r.position>10&&r.position<=20).sort((a,b)=>b.clicks-a.clicks).slice(0,6);
+/* ─── TABS ─── */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  $('tab-'+t.dataset.tab).classList.add('active');
+}));
 
-  document.getElementById('oppList').innerHTML = `
-    <div style="margin-bottom:18px">
-      <div style="font-size:14px;font-weight:700;margin-bottom:10px">🍋 Quick Win — posizione 4-15 con alte impressioni</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${lowHanging.map(r=>`
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--panel2);border-radius:10px;border:1px solid var(--border)">
-            <div style="flex:1;font-size:13px;font-weight:600">${escH(r.keys[0])}</div>
-            <span class="badge medium">pos. ${r.position.toFixed(1)}</span>
-            <span style="font-size:12px;color:var(--muted)">${fmt(r.impressions)} impr.</span>
-            <span style="font-size:12px;color:var(--muted)">${r.clicks} click</span>
-          </div>
-        `).join('')}
-        ${!lowHanging.length?'<div class="empty">Nessuna quick win trovata.</div>':''}
-      </div>
-    </div>
-    <div style="margin-bottom:18px">
-      <div style="font-size:14px;font-weight:700;margin-bottom:10px">📉 Alto volume, basso CTR — ottimizza title/meta</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${highImprLowCtr.map(r=>`
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--panel2);border-radius:10px;border:1px solid var(--border)">
-            <div style="flex:1;font-size:13px;font-weight:600">${escH(r.keys[0])}</div>
-            <span class="badge hard">CTR ${(r.ctr*100).toFixed(1)}%</span>
-            <span style="font-size:12px;color:var(--muted)">${fmt(r.impressions)} impr.</span>
-          </div>
-        `).join('')}
-        ${!highImprLowCtr.length?'<div class="empty">Nessuna.</div>':''}
-      </div>
-    </div>
-    <div>
-      <div style="font-size:14px;font-weight:700;margin-bottom:10px">🚀 Vicino alla prima pagina — posizione 11-20</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${nearTop.map(r=>`
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--panel2);border-radius:10px;border:1px solid var(--border)">
-            <div style="flex:1;font-size:13px;font-weight:600">${escH(r.keys[0])}</div>
-            <span class="badge hard">pos. ${r.position.toFixed(1)}</span>
-            <span style="font-size:12px;color:var(--muted)">${r.clicks} click</span>
-          </div>
-        `).join('')}
-        ${!nearTop.length?'<div class="empty">Nessuna.</div>':''}
-      </div>
-    </div>
-  `;
-}
-
-/* ── FILTERS ── */
-document.getElementById('searchFilter').addEventListener('input', e => renderQueryTable(e.target.value, document.getElementById('posFilter').value));
-document.getElementById('posFilter').addEventListener('change', e => renderQueryTable(document.getElementById('searchFilter').value, e.target.value));
-
-/* ── TABS ── */
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
-  });
-});
-
-/* ── CSV EXPORT ── */
-document.getElementById('exportCsvBtn').addEventListener('click', ()=>{
-  if(!allQueryData.length){ toast('⚠ Nessun dato'); return; }
-  const rows = [['Query','Click','Impressioni','CTR','Posizione'], ...allQueryData.map(r=>[r.keys[0],r.clicks,r.impressions,(r.ctr*100).toFixed(2),r.position.toFixed(1)])];
-  const csv = rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('
-');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent('﻿'+csv);
-  a.download = 'gsc_queries.csv';
-  a.click();
+/* ─── CSV ─── */
+$('exportCsvBtn').addEventListener('click',()=>{
+  if(!allQ.length){toast('⚠ Nessun dato');return;}
+  const rows=[['Query','Click','Impressioni','CTR','Posizione'],...allQ.map(r=>[r.keys[0],r.clicks,r.impressions,(r.ctr*100).toFixed(2),r.position.toFixed(1)])];
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent('\uFEFF'+csv);
+  a.download='gsc_queries.csv';a.click();
   toast('✅ CSV scaricato');
 });
 </script>
