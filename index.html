@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>KeywordLab Pro – Modulo 1: Login Google</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    :root{
+      --bg:#080f1e;--panel:#0d1526;--panel2:#111e33;
+      --border:rgba(148,163,184,.12);--text:#e2e8f0;--muted:#6b7fa3;
+      --accent:#3b82f6;--accent2:#22c55e;--danger:#ef4444;--r:14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,Segoe UI,sans-serif;background:var(--bg);color:var(--text);
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);
+      padding:36px;max-width:480px;width:100%}
+    .logo{font-size:22px;font-weight:800;margin-bottom:6px}
+    .logo span{color:var(--accent)}
+    .subtitle{color:var(--muted);font-size:14px;margin-bottom:28px;line-height:1.5}
+    .divider{border:none;border-top:1px solid var(--border);margin:24px 0}
+    .section-title{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px}
+
+    /* Google button personalizzato */
+    .btn-google{
+      display:flex;align-items:center;justify-content:center;gap:12px;
+      width:100%;padding:13px 20px;border-radius:12px;border:1px solid var(--border);
+      background:var(--panel2);color:var(--text);font-size:15px;font-weight:600;
+      cursor:pointer;transition:.2s;
+    }
+    .btn-google:hover{border-color:var(--accent);background:rgba(59,130,246,.06)}
+    .google-icon{width:20px;height:20px;flex-shrink:0}
+
+    /* Profile area */
+    .profile-box{
+      display:none;align-items:center;gap:14px;padding:16px;
+      background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);
+      border-radius:12px;margin-top:16px;
+    }
+    .profile-box.visible{display:flex}
+    .profile-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--accent2)}
+    .profile-name{font-weight:700;font-size:15px}
+    .profile-mail{font-size:12px;color:var(--muted)}
+    .profile-badge{margin-top:4px;display:inline-block;padding:3px 10px;border-radius:999px;
+      font-size:11px;font-weight:700;background:rgba(34,197,94,.15);color:#86efac}
+
+    /* Status steps */
+    .steps{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+    .step{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;
+      background:var(--panel2);border:1px solid var(--border);font-size:13px;color:var(--muted)}
+    .step.done{border-color:rgba(34,197,94,.25);color:var(--text)}
+    .step.done .step-icon{color:#86efac}
+    .step.active{border-color:rgba(59,130,246,.3);color:var(--text)}
+    .step.active .step-icon{color:#93c5fd}
+    .step-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0}
+
+    /* Client ID input */
+    .client-id-area{margin-top:18px}
+    .input-label{font-size:12px;color:var(--muted);margin-bottom:6px}
+    input{
+      width:100%;background:#080f1e;color:var(--text);
+      border:1px solid rgba(148,163,184,.2);border-radius:10px;
+      padding:11px 14px;font-size:13px;outline:none;
+    }
+    input:focus{border-color:var(--accent)}
+    .btn{
+      margin-top:10px;padding:11px 20px;border-radius:10px;border:none;cursor:pointer;
+      font-size:14px;font-weight:700;transition:.15s;width:100%;
+    }
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{filter:brightness(1.1)}
+    .btn-danger-sm{
+      margin-top:8px;padding:7px 14px;border-radius:8px;border:1px solid rgba(239,68,68,.25);
+      background:rgba(239,68,68,.1);color:#fca5a5;font-size:13px;font-weight:600;
+      cursor:pointer;transition:.15s;
+    }
+    .btn-danger-sm:hover{background:rgba(239,68,68,.18)}
+
+    /* Notice */
+    .notice{margin-top:18px;padding:12px 14px;border-radius:10px;font-size:12px;
+      line-height:1.6;color:var(--muted);background:var(--panel2);border:1px solid var(--border)}
+    .notice strong{color:var(--text)}
+    .notice a{color:#93c5fd;text-decoration:none}
+    .notice a:hover{text-decoration:underline}
+
+    .toast{position:fixed;bottom:20px;right:20px;background:#1e3a5f;border:1px solid #3b82f6;
+      color:#fff;padding:12px 18px;border-radius:12px;font-size:13px;
+      z-index:9999;opacity:0;pointer-events:none;transition:.3s}
+    .toast.show{opacity:1}
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">Keyword<span>Lab</span> Pro</div>
+  <div class="subtitle">Modulo 1 · Accedi con Google per sbloccare Search Console, dati reali e funzioni Pro.</div>
+
+  <!-- STEP 1: Inserisci Client ID -->
+  <div class="section-title">Passo 1 — Configura il tuo Google Client ID</div>
+  <div class="client-id-area">
+    <div class="input-label">Google OAuth Client ID (da console.cloud.google.com)</div>
+    <input id="clientIdInput" placeholder="XXXXXXXX-xxx.apps.googleusercontent.com" />
+    <button class="btn btn-primary" id="initBtn">✅ Inizializza OAuth</button>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- STEP 2: Login button -->
+  <div class="section-title">Passo 2 — Accedi con il tuo account Google</div>
+  <button class="btn-google" id="loginBtn" disabled>
+    <svg class="google-icon" viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+    </svg>
+    Accedi con Google
+  </button>
+
+  <!-- PROFILO utente -->
+  <div class="profile-box" id="profileBox">
+    <img class="profile-avatar" id="profileAvatar" src="" alt="avatar"/>
+    <div>
+      <div class="profile-name" id="profileName"></div>
+      <div class="profile-mail" id="profileMail"></div>
+      <div class="profile-badge">✅ Connesso · Search Console attiva</div>
+    </div>
+    <button class="btn-danger-sm" id="logoutBtn" style="margin-left:auto;margin-top:0">Esci</button>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- STATO steps -->
+  <div class="section-title">Stato connessione</div>
+  <div class="steps">
+    <div class="step" id="step1">
+      <span class="step-icon">🔑</span>
+      <span>Client ID inserito e OAuth inizializzato</span>
+    </div>
+    <div class="step" id="step2">
+      <span class="step-icon">👤</span>
+      <span>Account Google collegato</span>
+    </div>
+    <div class="step" id="step3">
+      <span class="step-icon">📊</span>
+      <span>Search Console API pronta</span>
+    </div>
+    <div class="step" id="step4">
+      <span class="step-icon">🚀</span>
+      <span>Pronto per import keyword reali</span>
+    </div>
+  </div>
+
+  <!-- NOTICE -->
+  <div class="notice">
+    <strong>Come ottenere il Client ID gratuito:</strong><br>
+    1. Vai su <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a><br>
+    2. Crea un progetto → "API e servizi" → "Credenziali"<br>
+    3. "Crea credenziali" → "ID client OAuth 2.0" → tipo: <strong>Applicazione web</strong><br>
+    4. In "Origini JavaScript autorizzate" aggiungi <strong>http://localhost</strong> o il tuo dominio<br>
+    5. Copia il Client ID e incollalo sopra<br>
+    Attiva anche: <strong>Google Search Console API</strong> dalla libreria API.
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ─── TOKEN STORAGE ─── */
+let accessToken = null;
+let userProfile = null;
+
+/* ─── TOAST ─── */
+function toast(msg, ms=3000){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), ms);
+}
+
+/* ─── STEP UI ─── */
+function setStep(n, state){
+  const el = document.getElementById('step'+n);
+  if(!el) return;
+  el.classList.toggle('done', state==='done');
+  el.classList.toggle('active', state==='active');
+  const icon = el.querySelector('.step-icon');
+  if(state==='done') icon.textContent = '✅';
+  else if(state==='active') icon.textContent = '⏳';
+}
+
+/* ─── SALVA/CARICA CLIENT ID ─── */
+const clientIdInput = document.getElementById('clientIdInput');
+const saved = localStorage.getItem('kwlab_client_id');
+if(saved) clientIdInput.value = saved;
+
+/* ─── INIT OAUTH ─── */
+document.getElementById('initBtn').addEventListener('click', initOAuth);
+
+function initOAuth(){
+  const clientId = clientIdInput.value.trim();
+  if(!clientId || !clientId.includes('.apps.googleusercontent.com')){
+    toast('⚠ Inserisci un Client ID valido (deve finire in .apps.googleusercontent.com)');
+    return;
+  }
+  localStorage.setItem('kwlab_client_id', clientId);
+
+  google.accounts.oauth2 && initTokenClient(clientId);
+  setStep(1,'done');
+  document.getElementById('loginBtn').disabled = false;
+  toast('✅ OAuth inizializzato! Ora premi "Accedi con Google"');
+}
+
+let tokenClient = null;
+
+function initTokenClient(clientId){
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: clientId,
+    scope: 'openid email profile https://www.googleapis.com/auth/webmasters.readonly',
+    callback: handleToken,
+  });
+}
+
+/* ─── LOGIN ─── */
+document.getElementById('loginBtn').addEventListener('click', ()=>{
+  if(!tokenClient){
+    const clientId = clientIdInput.value.trim();
+    if(!clientId){ toast('⚠ Prima inizializza OAuth'); return; }
+    initTokenClient(clientId);
+  }
+  setStep(2,'active');
+  tokenClient.requestAccessToken();
+});
+
+/* ─── CALLBACK TOKEN ─── */
+async function handleToken(resp){
+  if(resp.error){
+    toast('❌ Errore login: '+resp.error);
+    setStep(2,'');
+    return;
+  }
+  accessToken = resp.access_token;
+  setStep(2,'done');
+  toast('✅ Accesso autorizzato! Carico profilo…');
+
+  // carico profilo
+  try{
+    const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{
+      headers:{ Authorization: 'Bearer '+accessToken }
+    });
+    userProfile = await r.json();
+    showProfile(userProfile);
+    setStep(3,'done');
+    setStep(4,'done');
+    localStorage.setItem('kwlab_profile', JSON.stringify(userProfile));
+    toast('🎉 Connesso come '+userProfile.name+' · Search Console pronta!');
+  } catch(e){
+    toast('⚠ Profilo non disponibile: '+e.message);
+  }
+}
+
+/* ─── MOSTRA PROFILO ─── */
+function showProfile(p){
+  document.getElementById('profileAvatar').src = p.picture || '';
+  document.getElementById('profileName').textContent = p.name || '';
+  document.getElementById('profileMail').textContent = p.email || '';
+  document.getElementById('profileBox').classList.add('visible');
+  document.getElementById('loginBtn').style.display = 'none';
+}
+
+/* ─── LOGOUT ─── */
+document.getElementById('logoutBtn').addEventListener('click', ()=>{
+  accessToken = null;
+  userProfile = null;
+  localStorage.removeItem('kwlab_profile');
+  document.getElementById('profileBox').classList.remove('visible');
+  document.getElementById('loginBtn').style.display = 'flex';
+  ['step2','step3','step4'].forEach(s => {
+    const el = document.getElementById(s);
+    el.classList.remove('done','active');
+    el.querySelector('.step-icon').textContent = s==='step2'?'👤':s==='step3'?'📊':'🚀';
+  });
+  toast('👋 Disconnesso');
+  if(google?.accounts?.oauth2) google.accounts.oauth2.revoke(null, ()=>{});
+});
+
+/* ─── AUTO-RESTORE PROFILO DA LOCALSTORAGE ─── */
+const savedProfile = localStorage.getItem('kwlab_profile');
+if(savedProfile){
+  try{
+    userProfile = JSON.parse(savedProfile);
+    showProfile(userProfile);
+    setStep(1,'done');
+    setStep(2,'done');
+    setStep(3,'done');
+    setStep(4,'done');
+    document.getElementById('loginBtn').disabled = false;
+  } catch(e){}
+}
+
+/* ─── ESPONI TOKEN PER MODULI FUTURI ─── */
+window.kwlabGetToken = () => accessToken;
+window.kwlabGetProfile = () => userProfile;
+</script>
+</body>
+</html>
